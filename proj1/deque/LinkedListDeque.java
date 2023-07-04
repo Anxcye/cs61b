@@ -3,8 +3,9 @@ package deque;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<T>  {
+//public class LinkedListDeque<T> implements Iterable<T> {
 
+public class LinkedListDeque<T> {
     private int size = 0;
 
     private class Node {
@@ -107,28 +108,33 @@ public class LinkedListDeque<T>  {
         return p.item;
     }
 
-//    public Iterator<T> iterator() {
+
+//public Iterator<T> iterator() {
+//  // 创建一个新的迭代器对象
+//  Iterator<T> iter = new Iterator<T>() {
+//    // 定义一个当前索引变量
+//    private int index = 0;
 //
-//        return new LinkedListDequeIterator();
+//    // 实现hasNext方法，判断是否有下一个元素
+//    public boolean hasNext() {
+//      // 如果当前索引小于数组的长度，说明还有下一个元素
+//      return index < size;
 //    }
 //
-//    private class LinkedListDequeIterator implements Iterator<T> {
-//        private Node<T> p;
-//
-//        LinkedListDequeIterator() {
-//            p = head.next;
-//        }
-//
-//        public boolean hasNext() {
-//            return p == head;
-//        }
-//
-//        public T next() {
-//            T item = p.item;
-//            p = p.next;
-//            return item;
-//        }
+//    // 实现next方法，返回下一个元素
+//    public T next() {
+//      // 如果没有下一个元素，抛出异常
+//      if (!hasNext()) {
+////        throw new NoSuchElementException();
+//      }
+//      // 返回当前索引对应的元素，并将索引加一
+//      return get(index++);
 //    }
+//  };
+//  // 返回迭代器对象
+//  return iter;
+//}
+
 
     public boolean equals(Object o) {
         if (!(o instanceof LinkedListDeque))
@@ -154,8 +160,15 @@ public class LinkedListDeque<T>  {
     }
 
     public T getRecursive(int index) {
+        if (index > size || index < 0)
+            return null;
+        return getRecursiveHelper(index, sentinel.next);
+    }
 
-        return null;
+    private T getRecursiveHelper(int index, Node p) {
+        if (index == 0)
+            return p.item;
+        return getRecursiveHelper(index - 1, p.next);
     }
 
 }
