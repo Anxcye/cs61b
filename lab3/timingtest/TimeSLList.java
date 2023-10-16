@@ -1,4 +1,6 @@
 package timingtest;
+
+import com.sun.tools.internal.jxc.apt.Const;
 import edu.princeton.cs.algs4.Stopwatch;
 
 /**
@@ -21,35 +23,26 @@ public class TimeSLList {
         timeGetLast();
     }
 
-    public static double makeSLlist(int n){
-        SLList<Integer> temp = new SLList<>();
-        for (int i = 0; i < n; i++) {
-            temp.addLast(i);
-        }
-        Stopwatch sw = new Stopwatch();
-        for (int i = 0; i < 10000; i++) {
-            temp.getLast();
-        }
-        return sw.elapsedTime();
-    }
     public static void timeGetLast() {
-        // TODO: YOUR CODE HERE
+        int m = 10000;
         AList<Integer> Ns = new AList<>();
-        int[] n = {1000, 2000, 4000, 16000, 32000, 64000, 128000};
+        AList<Integer> opCounts = new AList<>();
+        AList<Double> times = new AList<>();
+        SLList<Integer> sll = new SLList<>();
+        for (int i = 1000; i < 128000; i *= 2) {
+            for (int j = 0; j < i; j++) {
+                sll.addFirst(j);
+            }
+            Stopwatch sw = new Stopwatch();
+            for (int j = 0; j < m; j++) {
+                sll.getLast();
+            }
+            Ns.addLast(i);
+            opCounts.addLast(m);
+            times.addLast(sw.elapsedTime());
+        }
+        printTimingTable(Ns, times, opCounts);
 
-        for (int i = 0; i < n.length; i++)
-            Ns.addLast(n[i]);
-
-        AList<Double> times   = new AList<>();
-
-        for (int i = 0; i < n.length; i++)
-            times.addLast(makeSLlist(n[i]));
-
-        AList<Integer> ops = new AList<>();
-        for (int i = 0; i < n.length; i++)
-            ops.addLast(10000);
-
-        printTimingTable(Ns, times, ops);
     }
 
 }
