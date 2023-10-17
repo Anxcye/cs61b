@@ -28,10 +28,12 @@ public class LinkedListDeque<T> {
     }
 
     public void addFirst(T item) {
+
         Node tmp = new Node(item);
         tmp.next = sentinel.next;
         tmp.prev = sentinel;
         sentinel.next = tmp;
+        sentinel.next.next.prev = sentinel.next;
         size++;
     }
 
@@ -40,6 +42,8 @@ public class LinkedListDeque<T> {
         tmp.prev = sentinel.prev;
         tmp.next = sentinel;
         sentinel.prev = tmp;
+        sentinel.prev.prev.next = sentinel.prev;
+
         size++;
     }
 
@@ -53,9 +57,9 @@ public class LinkedListDeque<T> {
 
     public void printDeque() {
         Node p = sentinel.next;
-        while(p.next != sentinel){
-            System.out.print(p.item + " ");
-
+        while (p != sentinel) {
+            System.out.print(p.item.toString() + " ");
+            p = p.next;
         }
         System.out.println();
     }
@@ -78,24 +82,46 @@ public class LinkedListDeque<T> {
         T ret = sentinel.prev.item;
         sentinel.prev.prev.next = sentinel;
         sentinel.prev = sentinel.prev.prev;
-        size --;
+        size--;
         return ret;
     }
 
     public T get(int index) {
-        Node p = sentinel.next;
-        while(index >= 0) {
-            if (p != sentinel) {
-                p = p.next;
-                index --;
-            }
+        if (index > size || index < 0) {
             return null;
         }
-
-        return p.item;
+        Node p = sentinel.next;
+        while (p != sentinel) {
+            if (index > 0) {
+                p = p.next;
+                index--;
+            }else if (index == 0){
+                return p.item;
+            }
+        }
+            return null;
     }
 
     public T getRecursive(int index) {
-        return null;
+        if (index < 0 || index >= size){
+            return null;
+        }
+        return getRecursiveHelper(index, sentinel.next);
     }
+
+    public T getRecursiveHelper(int index, Node p){
+        if (index == 0){
+            return p.item;
+        }
+        else{
+            return getRecursiveHelper(index - 1, p.next);
+        }
+    }
+//
+//    public Iterator<T> iterator(){
+//
+//    }
+//    public boolean equals(Object o){
+//
+//    }
 }
