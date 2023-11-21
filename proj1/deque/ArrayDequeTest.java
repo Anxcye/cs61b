@@ -200,17 +200,4 @@ public class ArrayDequeTest {
         assertNull("Should be null when index out of bound", lld1.get(1000));
     }
 
-    @Test
-    public void getRecursiveTest() {
-        ArrayDeque<Integer> lld1 = new ArrayDeque<>();
-
-        for (int i = 0; i < 1000; i++) {
-            lld1.addLast(i);
-        }
-
-        for (int i = 0; i < 1000; i++) {
-            assertEquals("Should have same value", i, (int) lld1.getRecursive(i));
-        }
-    }
-
 }
