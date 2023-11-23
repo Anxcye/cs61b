@@ -1,4 +1,5 @@
 package gh2;
+
 import edu.princeton.cs.algs4.StdAudio;
 import edu.princeton.cs.algs4.StdDraw;
 
@@ -24,7 +25,7 @@ public class GuitarHero {
                 index = GuitarHero.KEY.indexOf(key);
                 if (index != -1) {
                     string[index].pluck();
-                }else {
+                } else {
                     index = 0;
                 }
 
@@ -37,7 +38,8 @@ public class GuitarHero {
             StdAudio.play(sample);
 
             /* advance the simulation of each guitar string by one step */
-            string[index].tic();;
+            string[index].tic();
+            ;
         }
     }
 }
