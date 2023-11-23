@@ -58,7 +58,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
 
     @Override
     public void printDeque() {
-        for (int i = (first + 1 + arr.length) % arr.length; i != last; i = (i + 1 + arr.length) % arr.length) {
+        for (int i = (first + 1 + arr.length) % arr.length;
+             i != last; i = (i + 1 + arr.length) % arr.length) {
             System.out.print(arr[i].toString() + " ");
         }
         System.out.println();
@@ -105,10 +106,10 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         return new ArrayDequeIterator();
     }
 
-    class ArrayDequeIterator implements Iterator<T> {
+    private class ArrayDequeIterator implements Iterator<T> {
         private int index;
 
-        public ArrayDequeIterator() {
+        ArrayDequeIterator() {
             index = 0;
         }
 
@@ -125,6 +126,30 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         }
 
     }
+    public boolean equals(Object o){
+        if(this == o){
+            return true;
+        }
+        if(o == null){
+            return false;
+        }
+        if(o.getClass() != this.getClass()){
+            return false;
+        }
+        ArrayDeque<T> other = (ArrayDeque<T>) o;
+        if(other.size() != this.size()){
+            return false;
+        }
+        Iterator<T> it1 = this.iterator();
+        Iterator<T> it2 = other.iterator();
+        while(it1.hasNext()){
+            if(it1.next() != it2.next()){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 
 }

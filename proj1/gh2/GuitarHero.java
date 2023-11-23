@@ -7,10 +7,10 @@ import edu.princeton.cs.algs4.StdDraw;
  */
 public class GuitarHero {
     public static final double CONCERT = 440.0;
-    public static final String key = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
+    public static final String KEY = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
 
     public static void main(String[] args) {
-        GuitarString string[] = new GuitarString[37];
+        GuitarString[] string = new GuitarString[37];
         for (int i = 0; i < 37; i++) {
             string[i] = new GuitarString(CONCERT * Math.pow(2, (i - 24.0) / 12.0));
         }
@@ -21,11 +21,12 @@ public class GuitarHero {
             /* check if the user has typed a key; if so, process it */
             if (StdDraw.hasNextKeyTyped()) {
                 char key = StdDraw.nextKeyTyped();
-                index = GuitarHero.key.indexOf(key);
+                index = GuitarHero.KEY.indexOf(key);
                 if (index != -1) {
                     string[index].pluck();
-                }else
+                }else {
                     index = 0;
+                }
 
             }
 
