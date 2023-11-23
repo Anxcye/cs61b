@@ -1,6 +1,8 @@
 package deque;
 
-public class ArrayDeque<T> {
+import java.util.Iterator;
+
+public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     private T[] arr;
     private int first;
     private int last;
@@ -27,6 +29,7 @@ public class ArrayDeque<T> {
         arr = tmp;
     }
 
+    @Override
     public void addFirst(T item) {
         if (size == arr.length) {
             resize(size * 2);
@@ -37,6 +40,7 @@ public class ArrayDeque<T> {
 
     }
 
+    @Override
     public void addLast(T item) {
         if (size == arr.length) {
             resize(2 * size);
@@ -46,14 +50,13 @@ public class ArrayDeque<T> {
         size++;
     }
 
-    public boolean isEmpty() {
-        return size == 0;
-    }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public void printDeque() {
         for (int i = (first + 1 + arr.length) % arr.length; i != last; i = (i + 1 + arr.length) % arr.length) {
             System.out.print(arr[i].toString() + " ");
@@ -61,39 +64,67 @@ public class ArrayDeque<T> {
         System.out.println();
     }
 
+    @Override
     public T removeFirst() {
-        if (size <= 0){
+        if (size <= 0) {
             return null;
         }
         size--;
         first = (first + 1 + arr.length) % arr.length;
         T ret = arr[first];
-        if ((size < arr.length / 4 )&& size >= 16) {
+        if ((size < arr.length / 4) && size >= 16) {
             resize(arr.length / 2);
         }
         return ret;
     }
 
+    @Override
     public T removeLast() {
-        if (size <= 0){
+        if (size <= 0) {
             return null;
         }
         size--;
         last = (last - 1 + arr.length) % arr.length;
         T ret = arr[last];
-        if ((size < arr.length / 4 )&& size >= 16) {
+        if ((size < arr.length / 4) && size >= 16) {
             resize(arr.length / 2);
         }
         return ret;
     }
 
+    @Override
     public T get(int index) {
-        if (index < 0 || index >= size){
+        if (index < 0 || index >= size) {
             return null;
         }
         return arr[(first + 1 + index) % arr.length];
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator();
+    }
+
+    class ArrayDequeIterator implements Iterator<T> {
+        private int index;
+
+        public ArrayDequeIterator() {
+            index = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return index < size;
+        }
+
+        @Override
+        public T next() {
+            T ret = get(index);
+            index++;
+            return ret;
+        }
+
+    }
 
 
 }
